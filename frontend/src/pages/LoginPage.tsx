@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CalendarDays, CheckCircle2, DollarSign, ShieldCheck, Sparkles, Users } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export function LoginPage() {
@@ -30,11 +30,28 @@ export function LoginPage() {
 
   return (
     <main className="auth-page">
+      <div className="auth-ambient auth-ambient-one" />
+      <div className="auth-ambient auth-ambient-two" />
       <section className="auth-panel">
         <div className="auth-copy">
           <span className="eyebrow">ServiceFlow SaaS</span>
           <h1>Controle clientes, ordens, agenda e financeiro em um fluxo simples.</h1>
           <p>Uma operação completa para prestadores de serviço que precisam sair da planilha sem virar reféns de um ERP pesado.</p>
+          <div className="auth-device">
+            <div className="device-top">
+              <span />
+              <strong>Hoje</strong>
+            </div>
+            <div className="device-metrics">
+              <div><Users size={18} /><strong>32</strong><small>Clientes</small></div>
+              <div><CalendarDays size={18} /><strong>08</strong><small>OS abertas</small></div>
+              <div><DollarSign size={18} /><strong>8,4k</strong><small>Receita</small></div>
+            </div>
+            <div className="device-task">
+              <CheckCircle2 size={18} />
+              <span>Próximo atendimento sincronizado</span>
+            </div>
+          </div>
           <div className="auth-badges">
             <span>JWT</span>
             <span>LGPD</span>
@@ -43,11 +60,16 @@ export function LoginPage() {
           </div>
         </div>
         <form className="auth-card" onSubmit={submit}>
-          <ShieldCheck size={30} />
-          <h2>{mode === 'login' ? 'Entrar' : 'Criar conta'}</h2>
-          {mode === 'register' && <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Nome" />}
-          <input value={email} onChange={(event) => setEmail(event.target.value)} placeholder="E-mail" type="email" />
-          <input value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Senha" type="password" />
+          <div className="auth-card-head">
+            <div className="auth-icon"><ShieldCheck size={24} /></div>
+            <div>
+              <span><Sparkles size={14} /> Acesso seguro</span>
+              <h2>{mode === 'login' ? 'Entrar' : 'Criar conta'}</h2>
+            </div>
+          </div>
+          {mode === 'register' && <label className="auth-field"><span>Nome</span><input value={name} onChange={(event) => setName(event.target.value)} placeholder="Seu nome" /></label>}
+          <label className="auth-field"><span>E-mail</span><input value={email} onChange={(event) => setEmail(event.target.value)} placeholder="voce@empresa.com" type="email" /></label>
+          <label className="auth-field"><span>Senha</span><input value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Sua senha" type="password" /></label>
           {error && <p className="form-error">{error}</p>}
           <button className="primary-button" disabled={loading}>
             {loading ? 'Aguarde...' : mode === 'login' ? 'Entrar agora' : 'Cadastrar'}
@@ -61,4 +83,3 @@ export function LoginPage() {
     </main>
   );
 }
-

@@ -33,10 +33,19 @@ export function useResource<T>(path: string) {
     await load();
   }
 
+  async function activate(id: number) {
+    await api<T>(`${path}/${id}/activate`, { method: 'PATCH' });
+    await load();
+  }
+
+  async function deactivate(id: number) {
+    await api<T>(`${path}/${id}/deactivate`, { method: 'PATCH' });
+    await load();
+  }
+
   useEffect(() => {
     load();
   }, [path]);
 
-  return { items, loading, error, load, create, update, remove };
+  return { items, loading, error, load, create, update, remove, activate, deactivate };
 }
-

@@ -8,6 +8,7 @@ import { OrdersPage } from './pages/OrdersPage';
 import { FinancePage } from './pages/FinancePage';
 import { InventoryPage } from './pages/InventoryPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { ThemeProvider } from './context/ThemeContext';
 
 function AppContent() {
   const { isAuthenticated } = useAuth();
@@ -38,7 +39,9 @@ function AppContent() {
 export default function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
     </AuthProvider>
   );
 }

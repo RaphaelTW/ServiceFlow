@@ -8,6 +8,7 @@ export type User = {
 
 export type Customer = {
   id: number;
+  is_active?: number;
   name: string;
   document?: string;
   phone?: string;
@@ -15,10 +16,12 @@ export type Customer = {
   email?: string;
   city?: string;
   state?: string;
+  notes?: string;
 };
 
 export type WorkOrder = {
   id: number;
+  is_active?: number;
   code: string;
   title: string;
   status: 'open' | 'in_progress' | 'completed' | 'canceled';
@@ -38,4 +41,3 @@ export type DashboardData = {
   services_chart: Array<{ name: string; total: number }>;
   upcoming: WorkOrder[];
 };
-
