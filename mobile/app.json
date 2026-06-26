@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "ServiceFlow",
+    "slug": "serviceflow",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#101827"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.serviceflow.app"
+    },
+    "android": {
+      "package": "com.serviceflow.app",
+      "permissions": ["CAMERA", "ACCESS_FINE_LOCATION", "POST_NOTIFICATIONS"]
+    },
+    "plugins": ["expo-camera", "expo-location", "expo-notifications"]
+  }
+}
