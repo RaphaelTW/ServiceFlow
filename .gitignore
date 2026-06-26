@@ -5,7 +5,10 @@
 
 # Dependencies
 node_modules/
+frontend/node_modules/
+mobile/node_modules/
 vendor/
+backend/vendor/
 
 # Frontend builds
 frontend/dist/
@@ -59,4 +62,3 @@ tmp/
 temp/
 *.tmp
 *.cache
-
