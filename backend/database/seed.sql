@@ -6,7 +6,11 @@ ON DUPLICATE KEY UPDATE company_name = VALUES(company_name);
 
 INSERT INTO users (tenant_id, name, email, password_hash, role, email_verified_at)
 VALUES (1, 'Administrador', 'admin@serviceflow.local', '$2y$10$nVtifYPn67e.yvxSZ/ppget0W2DGJMsWrfWd.S7W2i.FZk.i0VDTC', 'owner', NOW())
-ON DUPLICATE KEY UPDATE name = VALUES(name);
+ON DUPLICATE KEY UPDATE
+  name = VALUES(name),
+  password_hash = VALUES(password_hash),
+  role = VALUES(role),
+  email_verified_at = VALUES(email_verified_at);
 
 INSERT INTO service_categories (tenant_id, name, color) VALUES
 (1, 'Manutenção', '#2563eb'),
@@ -48,4 +52,3 @@ INSERT INTO financial_transactions (tenant_id, work_order_id, category_id, descr
 
 INSERT INTO subscriptions (tenant_id, plan, status, current_period_start, current_period_end)
 VALUES (1, 'pro', 'active', CURRENT_DATE, DATE_ADD(CURRENT_DATE, INTERVAL 30 DAY));
-

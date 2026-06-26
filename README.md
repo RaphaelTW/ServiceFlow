@@ -33,6 +33,13 @@ mysql -u root -p serviceflow < backend/database/schema.sql
 mysql -u root -p serviceflow < backend/database/seed.sql
 ```
 
+Para bancos já criados antes da coluna `is_active`, rode:
+
+```bash
+mysql -u root -p serviceflow < backend/database/migrations/2026_06_26_add_is_active.sql
+mysql -u root -p serviceflow < backend/database/migrations/2026_06_26_refresh_active_views.sql
+```
+
 3. Backend:
 
 ```bash

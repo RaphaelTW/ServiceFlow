@@ -105,6 +105,7 @@ CREATE TABLE customers (
   state CHAR(2) NULL,
   photo_path VARCHAR(255) NULL,
   notes TEXT NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
   lgpd_consent_at TIMESTAMP NULL,
   deleted_at TIMESTAMP NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -119,6 +120,7 @@ CREATE TABLE service_categories (
   tenant_id BIGINT UNSIGNED NOT NULL,
   name VARCHAR(100) NOT NULL,
   color VARCHAR(16) NOT NULL DEFAULT '#2563eb',
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
   deleted_at TIMESTAMP NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -136,6 +138,7 @@ CREATE TABLE services (
   color VARCHAR(16) NOT NULL DEFAULT '#0f766e',
   image_path VARCHAR(255) NULL,
   is_favorite BOOLEAN NOT NULL DEFAULT FALSE,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
   deleted_at TIMESTAMP NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -162,6 +165,7 @@ CREATE TABLE work_orders (
   discount DECIMAL(12,2) NOT NULL DEFAULT 0,
   total DECIMAL(12,2) NOT NULL DEFAULT 0,
   pdf_path VARCHAR(255) NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
   deleted_at TIMESTAMP NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -235,6 +239,7 @@ CREATE TABLE financial_transactions (
   paid_at DATE NULL,
   installments INT UNSIGNED NOT NULL DEFAULT 1,
   status ENUM('pending', 'paid', 'canceled') NOT NULL DEFAULT 'pending',
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
   deleted_at TIMESTAMP NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -251,6 +256,7 @@ CREATE TABLE suppliers (
   document VARCHAR(32) NULL,
   phone VARCHAR(32) NULL,
   email VARCHAR(160) NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
   deleted_at TIMESTAMP NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -270,6 +276,7 @@ CREATE TABLE products (
   cost_price DECIMAL(12,2) NOT NULL DEFAULT 0,
   sale_price DECIMAL(12,2) NOT NULL DEFAULT 0,
   image_path VARCHAR(255) NULL,
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
   deleted_at TIMESTAMP NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -459,14 +466,14 @@ SELECT
   COUNT(DISTINCT c.id) AS customers_count,
   SUM(CASE WHEN wo.status IN ('open', 'in_progress') THEN 1 ELSE 0 END) AS open_orders,
   SUM(CASE WHEN wo.status = 'completed' THEN 1 ELSE 0 END) AS completed_orders,
-  COALESCE((SELECT SUM(amount) FROM financial_transactions ft WHERE ft.tenant_id = t.id AND ft.type = 'income' AND MONTH(ft.due_date) = MONTH(CURRENT_DATE) AND YEAR(ft.due_date) = YEAR(CURRENT_DATE) AND ft.deleted_at IS NULL), 0) AS monthly_revenue,
-  COALESCE((SELECT SUM(amount) FROM financial_transactions ft WHERE ft.tenant_id = t.id AND ft.type = 'income' AND YEAR(ft.due_date) = YEAR(CURRENT_DATE) AND ft.deleted_at IS NULL), 0) AS annual_revenue
+  COALESCE((SELECT SUM(amount) FROM financial_transactions ft WHERE ft.tenant_id = t.id AND ft.type = 'income' AND MONTH(ft.due_date) = MONTH(CURRENT_DATE) AND YEAR(ft.due_date) = YEAR(CURRENT_DATE) AND ft.is_active = 1), 0) AS monthly_revenue,
+  COALESCE((SELECT SUM(amount) FROM financial_transactions ft WHERE ft.tenant_id = t.id AND ft.type = 'income' AND YEAR(ft.due_date) = YEAR(CURRENT_DATE) AND ft.is_active = 1), 0) AS annual_revenue
 FROM tenants t
-LEFT JOIN customers c ON c.tenant_id = t.id AND c.deleted_at IS NULL
-LEFT JOIN work_orders wo ON wo.tenant_id = t.id AND wo.deleted_at IS NULL
+LEFT JOIN customers c ON c.tenant_id = t.id AND c.is_active = 1
+LEFT JOIN work_orders wo ON wo.tenant_id = t.id AND wo.is_active = 1
 GROUP BY t.id;
 
 CREATE OR REPLACE VIEW v_low_stock_products AS
 SELECT tenant_id, id AS product_id, name, quantity, minimum_quantity
 FROM products
-WHERE deleted_at IS NULL AND quantity <= minimum_quantity;
+WHERE is_active = 1 AND quantity <= minimum_quantity;

@@ -19,8 +19,13 @@ abstract class BaseRepository
     public function paginate(int $tenantId, array $filters = [], int $page = 1, int $perPage = 15): array
     {
         $offset = max(0, ($page - 1) * $perPage);
-        $where = ['tenant_id = :tenant_id', 'deleted_at IS NULL'];
+        $where = ['tenant_id = :tenant_id'];
         $params = ['tenant_id' => $tenantId];
+
+        if (($filters['active'] ?? 'all') !== 'all') {
+            $where[] = 'is_active = :is_active';
+            $params['is_active'] = (int) $filters['active'];
+        }
 
         if (!empty($filters['search'])) {
             $where[] = '(name LIKE :search OR email LIKE :search OR phone LIKE :search)';
@@ -41,7 +46,7 @@ abstract class BaseRepository
 
     public function find(int $tenantId, int $id): ?array
     {
-        $stmt = $this->db->prepare('SELECT * FROM ' . $this->table . ' WHERE tenant_id = :tenant_id AND id = :id AND deleted_at IS NULL LIMIT 1');
+        $stmt = $this->db->prepare('SELECT * FROM ' . $this->table . ' WHERE tenant_id = :tenant_id AND id = :id LIMIT 1');
         $stmt->execute(['tenant_id' => $tenantId, 'id' => $id]);
         $row = $stmt->fetch();
         return $row ?: null;
@@ -76,8 +81,17 @@ abstract class BaseRepository
 
     public function delete(int $tenantId, int $id): void
     {
-        $stmt = $this->db->prepare('UPDATE ' . $this->table . ' SET deleted_at = NOW() WHERE tenant_id = :tenant_id AND id = :id');
+        $stmt = $this->db->prepare('UPDATE ' . $this->table . ' SET is_active = 0 WHERE tenant_id = :tenant_id AND id = :id');
         $stmt->execute(['tenant_id' => $tenantId, 'id' => $id]);
     }
-}
 
+    public function activate(int $tenantId, int $id): ?array
+    {
+        return $this->update($tenantId, $id, ['is_active' => 1]);
+    }
+
+    public function deactivate(int $tenantId, int $id): ?array
+    {
+        return $this->update($tenantId, $id, ['is_active' => 0]);
+    }
+}

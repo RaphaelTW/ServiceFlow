@@ -42,6 +42,7 @@ foreach ($resources as $name => $controller) {
     $router->get("$base/$name/{id}", [$controller, 'show']);
     $router->put("$base/$name/{id}", [$controller, 'update']);
     $router->patch("$base/$name/{id}", [$controller, 'patch']);
+    $router->patch("$base/$name/{id}/activate", [$controller, 'activate']);
+    $router->patch("$base/$name/{id}/deactivate", [$controller, 'deactivate']);
     $router->delete("$base/$name/{id}", [$controller, 'destroy']);
 }
-

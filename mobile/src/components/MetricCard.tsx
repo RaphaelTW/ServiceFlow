@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 126,
     backgroundColor: '#ffffff',
-    borderRadius: 8,
+    borderRadius: 18,
     borderWidth: 1,
     borderColor: '#dde3eb',
     padding: 14
@@ -35,4 +35,3 @@ const styles = StyleSheet.create({
     fontWeight: '900'
   }
 });
-

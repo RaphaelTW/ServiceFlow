@@ -55,7 +55,19 @@ abstract class CrudController
     {
         $user = AuthMiddleware::user();
         $this->repository->delete((int) $user['tenant_id'], $id);
-        Response::noContent();
+        Response::ok(['id' => $id, 'is_active' => 0], 'Registro desativado.');
+    }
+
+    public function activate(int $id): void
+    {
+        $user = AuthMiddleware::user();
+        Response::ok($this->repository->activate((int) $user['tenant_id'], $id) ?? [], 'Registro ativado.');
+    }
+
+    public function deactivate(int $id): void
+    {
+        $user = AuthMiddleware::user();
+        Response::ok($this->repository->deactivate((int) $user['tenant_id'], $id) ?? [], 'Registro desativado.');
     }
 
     protected function payload(array $data, int $tenantId, bool $creating = true): array
@@ -81,4 +93,3 @@ abstract class CrudController
         }
     }
 }
-

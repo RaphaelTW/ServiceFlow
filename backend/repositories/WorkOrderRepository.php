@@ -25,10 +25,9 @@ final class WorkOrderRepository extends BaseRepository
     public function monthlyCount(int $tenantId): int
     {
         $stmt = $this->db->prepare(
-            'SELECT COUNT(*) FROM work_orders WHERE tenant_id = :tenant_id AND created_at >= DATE_FORMAT(CURRENT_DATE, "%Y-%m-01") AND deleted_at IS NULL'
+            'SELECT COUNT(*) FROM work_orders WHERE tenant_id = :tenant_id AND is_active = 1 AND created_at >= DATE_FORMAT(CURRENT_DATE, "%Y-%m-01")'
         );
         $stmt->execute(['tenant_id' => $tenantId]);
         return (int) $stmt->fetchColumn();
     }
 }
-
