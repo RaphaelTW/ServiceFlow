@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   title: { fontSize: 28, fontWeight: '900', color: '#111827' },
   button: { width: 42, height: 42, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: '#007aff' },
   list: { gap: 12, paddingTop: 16 },
-  card: { padding: 16, borderRadius: 18, backgroundColor: '#ffffff', borderWidth: 1, borderColor: '#dde3eb' },
+  card: { padding: 16, borderRadius: 22, backgroundColor: 'rgba(255,255,255,0.86)', borderWidth: 1, borderColor: 'rgba(221,227,235,0.86)', shadowColor: '#0f172a', shadowOpacity: 0.07, shadowRadius: 20, shadowOffset: { width: 0, height: 10 }, elevation: 3 },
   inactiveCard: { opacity: 0.58 },
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between' },
   code: { color: '#007aff', fontWeight: '900' },

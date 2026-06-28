@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { BrandLogo } from '../components/BrandLogo';
 import { useAuth } from '../context/AuthContext';
 
 export function LoginScreen() {
@@ -22,10 +23,16 @@ export function LoginScreen() {
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
+      <View style={styles.glowOne} />
+      <View style={styles.glowTwo} />
       <View style={styles.hero}>
-        <View style={styles.logo}><Text style={styles.logoText}>SF</Text></View>
+        <BrandLogo />
         <Text style={styles.title}>ServiceFlow</Text>
         <Text style={styles.subtitle}>Clientes, ordens e financeiro com a fluidez de um app moderno.</Text>
+      </View>
+      <View style={styles.securityRow}>
+        <Ionicons name="shield-checkmark-outline" size={18} color="#30b981" />
+        <Text style={styles.securityText}>Acesso seguro</Text>
       </View>
       <View style={styles.card}>
         <View style={styles.inputRow}>
@@ -45,16 +52,18 @@ export function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#f4f5f7' },
+  container: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: '#f4f5f7', overflow: 'hidden' },
+  glowOne: { position: 'absolute', width: 280, height: 280, borderRadius: 140, left: -120, top: 80, backgroundColor: 'rgba(0,122,255,0.14)' },
+  glowTwo: { position: 'absolute', width: 300, height: 300, borderRadius: 150, right: -150, bottom: 80, backgroundColor: 'rgba(48,185,129,0.14)' },
   hero: { alignItems: 'center', marginBottom: 26 },
-  logo: { width: 66, height: 66, borderRadius: 18, alignItems: 'center', justifyContent: 'center', backgroundColor: '#007aff' },
-  logoText: { color: '#ffffff', fontSize: 24, fontWeight: '900' },
   title: { marginTop: 16, color: '#111827', fontSize: 34, fontWeight: '900' },
   subtitle: { marginTop: 8, color: '#64748b', textAlign: 'center', lineHeight: 21 },
-  card: { gap: 12, padding: 16, borderRadius: 22, backgroundColor: '#ffffff', borderWidth: 1, borderColor: '#dde3eb' },
-  inputRow: { minHeight: 50, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12, borderRadius: 14, backgroundColor: '#f6f7fb' },
+  securityRow: { alignSelf: 'center', flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 12, paddingHorizontal: 12, height: 34, borderRadius: 17, backgroundColor: 'rgba(255,255,255,0.72)', borderWidth: 1, borderColor: 'rgba(221,227,235,0.8)' },
+  securityText: { color: '#30b981', fontWeight: '900' },
+  card: { gap: 12, padding: 16, borderRadius: 24, backgroundColor: 'rgba(255,255,255,0.86)', borderWidth: 1, borderColor: 'rgba(221,227,235,0.88)', shadowColor: '#0f172a', shadowOpacity: 0.09, shadowRadius: 28, shadowOffset: { width: 0, height: 18 }, elevation: 6 },
+  inputRow: { minHeight: 52, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12, borderRadius: 16, backgroundColor: 'rgba(246,247,251,0.9)' },
   input: { flex: 1, color: '#111827' },
-  button: { height: 50, borderRadius: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: '#007aff' },
+  button: { height: 52, borderRadius: 16, alignItems: 'center', justifyContent: 'center', backgroundColor: '#007aff' },
   buttonText: { color: '#ffffff', fontWeight: '900', fontSize: 16 }
 });
 

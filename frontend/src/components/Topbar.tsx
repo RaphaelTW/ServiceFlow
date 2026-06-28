@@ -1,4 +1,4 @@
-import { Bell, LogOut, Moon, Search, Sun } from 'lucide-react';
+import { Bell, LogOut, Moon, Sun } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { confirmAction } from '../services/alerts';
@@ -14,27 +14,18 @@ export function Topbar() {
   }
 
   return (
-    <header className="topbar">
-      <div className="search">
-        <Search size={18} />
-        <input placeholder="Pesquisar cliente, OS, serviço..." />
-      </div>
+    <div className="topbar">
       <button className="icon-button" title="Alternar tema" onClick={toggleTheme}>
-        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+        {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
       </button>
       <button className="icon-button" title="Notificações">
-        <Bell size={18} />
+        <Bell size={17} />
       </button>
-      <div className="user-chip">
+      <button className="user-chip" title="Sair" onClick={confirmLogout}>
         <span>{user?.name?.slice(0, 1) ?? 'S'}</span>
-        <div>
-          <strong>{user?.name ?? 'ServiceFlow'}</strong>
-          <button className="logout-button" onClick={confirmLogout}>
-            <LogOut size={14} />
-            Sair
-          </button>
-        </div>
-      </div>
-    </header>
+        <strong>{user?.name ?? 'ServiceFlow'}</strong>
+        <LogOut size={14} />
+      </button>
+    </div>
   );
 }

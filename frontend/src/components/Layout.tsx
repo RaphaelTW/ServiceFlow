@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { BarChart3, Boxes, CalendarDays, ClipboardList, CreditCard, LayoutDashboard, Settings, Users } from 'lucide-react';
 import { Topbar } from './Topbar';
+import { BrandLogo } from './BrandLogo';
 
 const nav = [
   { key: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -10,7 +11,7 @@ const nav = [
   { key: 'finance', label: 'Financeiro', icon: CreditCard },
   { key: 'inventory', label: 'Estoque', icon: Boxes },
   { key: 'reports', label: 'Relatórios', icon: BarChart3 },
-  { key: 'settings', label: 'Configurações', icon: Settings }
+  { key: 'settings', label: 'Ajustes', icon: Settings }
 ];
 
 type LayoutProps = {
@@ -22,31 +23,27 @@ type LayoutProps = {
 export function Layout({ active, onNavigate, children }: LayoutProps) {
   return (
     <div className="app-shell">
-      <aside className="sidebar">
+      <header className="apple-navbar">
         <div className="brand">
-          <div className="brand-mark">SF</div>
-          <div>
-            <strong>ServiceFlow</strong>
-            <span>ERP de serviços</span>
-          </div>
+          <BrandLogo compact />
+          <strong>ServiceFlow</strong>
         </div>
-        <nav>
+        <nav className="apple-nav" aria-label="Navegação principal">
           {nav.map((item) => {
             const Icon = item.icon;
             return (
-              <button className={active === item.key ? 'active' : ''} key={item.key} onClick={() => onNavigate(item.key)}>
-                <Icon size={18} />
-                {item.label}
+              <button className={active === item.key ? 'active' : ''} key={item.key} onClick={() => onNavigate(item.key)} title={item.label}>
+                <Icon size={15} />
+                <span>{item.label}</span>
               </button>
             );
           })}
         </nav>
-      </aside>
-      <main className="workspace">
         <Topbar />
+      </header>
+      <main className="workspace">
         {children}
       </main>
     </div>
   );
 }
-

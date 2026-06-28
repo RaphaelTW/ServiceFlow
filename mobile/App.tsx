@@ -27,6 +27,7 @@ function AppShell() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
+      <View style={styles.backgroundGlow} />
       <View style={styles.content}>
         {tab === 'home' && <HomeScreen />}
         {tab === 'customers' && <CustomersScreen />}
@@ -58,26 +59,42 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f4f5f7'
   },
+  backgroundGlow: {
+    position: 'absolute',
+    width: 320,
+    height: 320,
+    borderRadius: 160,
+    right: -160,
+    top: -120,
+    backgroundColor: 'rgba(0,122,255,0.12)'
+  },
   content: {
     flex: 1
   },
   tabs: {
     flexDirection: 'row',
-    padding: 10,
+    margin: 12,
+    padding: 8,
     gap: 8,
-    backgroundColor: '#ffffff',
-    borderTopWidth: 1,
-    borderTopColor: '#dde3eb'
+    borderRadius: 24,
+    backgroundColor: 'rgba(255,255,255,0.88)',
+    borderWidth: 1,
+    borderColor: 'rgba(221,227,235,0.86)',
+    shadowColor: '#0f172a',
+    shadowOpacity: 0.1,
+    shadowRadius: 24,
+    shadowOffset: { width: 0, height: 14 },
+    elevation: 8
   },
   tab: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 8,
-    borderRadius: 14
+    paddingVertical: 9,
+    borderRadius: 17
   },
   activeTab: {
-    backgroundColor: '#eaf4ff'
+    backgroundColor: 'rgba(0,122,255,0.1)'
   },
   tabText: {
     marginTop: 3,

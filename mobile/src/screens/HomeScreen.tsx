@@ -86,17 +86,27 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'rgba(255,255,255,0.86)',
     borderWidth: 1,
-    borderColor: '#dde3eb'
+    borderColor: 'rgba(221,227,235,0.86)',
+    shadowColor: '#0f172a',
+    shadowOpacity: 0.08,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 4
   },
   grid: { flexDirection: 'row', gap: 12 },
   panel: {
-    backgroundColor: '#ffffff',
-    borderRadius: 18,
+    backgroundColor: 'rgba(255,255,255,0.86)',
+    borderRadius: 22,
     padding: 16,
     borderWidth: 1,
-    borderColor: '#dde3eb'
+    borderColor: 'rgba(221,227,235,0.86)',
+    shadowColor: '#0f172a',
+    shadowOpacity: 0.07,
+    shadowRadius: 22,
+    shadowOffset: { width: 0, height: 12 },
+    elevation: 4
   },
   panelTitle: { fontWeight: '900', fontSize: 16, marginBottom: 10, color: '#111827' },
   row: { flexDirection: 'row', gap: 10, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#edf1f6' },
